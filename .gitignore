@@ -1,0 +1,29 @@
+# dependencies and build output
+node_modules/
+dist/
+coverage/
+
+# secrets: never commit these
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+service-account*.json
+*-credentials.json
+application_default_credentials.json
+
+# Firebase / Google Cloud local state
+.firebase/
+.firebaserc
+firebase-debug.log*
+firestore-debug.log
+ui-debug.log
+
+# logs, editors, OS
+*.log
+npm-debug.log*
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/

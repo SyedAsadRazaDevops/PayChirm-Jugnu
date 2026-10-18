@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Jugnu Alert Console</title>
+  <meta name="description" content="Jugnu Alert console: stands in for the Connector phone. Paste or pick a synthetic bank alert and send it to the same API a real Connector would call.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='14' fill='%23f2b705' fill-opacity='.25'/%3E%3Ccircle cx='16' cy='16' r='7' fill='%23f2b705'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="css/jugnu.css">
+  <link rel="stylesheet" href="css/console.css">
+</head>
+<body>
+  <header class="top">
+    <div class="title">
+      <span class="spark" aria-hidden="true"></span>
+      <h1>Jugnu Alert <span class="sub">alert console</span></h1>
+    </div>
+    <div class="badges">
+      <span id="badge-gemini" class="chip info">Gemini: …</span>
+      <span id="badge-store" class="chip info">Relay: …</span>
+      <a id="open-screen" class="btn small" href="./" target="_blank" rel="noopener">Open the Screen in a new tab</a>
+    </div>
+  </header>
+
+  <p class="notice" id="notice">Synthetic samples only. No real bank data. This console stands in for the Android Connector phone: it calls the same <code>POST /api/alerts</code> endpoint.</p>
+
+  <main class="grid">
+    <section class="card" aria-labelledby="h-send">
+      <h2 id="h-send">1. Send an alert</h2>
+
+      <div class="field">
+        <label for="code">Shop pairing code</label>
+        <div class="inline">
+          <input id="code" type="text" value="JUGNU-DEMO" autocapitalize="characters" spellcheck="false" maxlength="24">
+          <button id="join" type="button" class="btn">Join</button>
+        </div>
+        <p id="shop-line" class="hint">Not joined yet.</p>
+      </div>
+
+      <div class="field">
+        <label for="sample">Sample alert (synthetic)</label>
+        <select id="sample"></select>
+      </div>
+
+      <div class="two">
+        <div class="field">
+          <label for="sender">Sender ID</label>
+          <input id="sender" type="text" maxlength="40" spellcheck="false">
+        </div>
+        <div class="field">
+          <label for="amount">Amount in the sample</label>
+          <input id="amount" type="number" min="1" step="0.01">
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="text">Alert text</label>
+        <textarea id="text" rows="7" dir="auto" spellcheck="false"></textarea>
+        <p class="hint">Edit freely. A new reference and time are filled in after every send, unless you edit the text yourself.</p>
+      </div>
+
+      <div class="field">
+        <label for="expected">Expected amount <span class="opt">optional</span></label>
+        <div class="inline">
+          <input id="expected" type="number" min="1" step="0.01" placeholder="e.g. 2500">
+          <button id="exp-match" type="button" class="btn small">Same as sample</button>
+          <button id="exp-miss" type="button" class="btn small">Different from sample</button>
+          <button id="exp-clear" type="button" class="btn small">Clear</button>
+        </div>
+        <p class="hint">The cashier's bill. Only a payment that matches it is confirmed.</p>
+      </div>
+
+      <div class="actions">
+        <button id="send" type="button" class="btn primary">Send alert</button>
+        <button id="send-fake" type="button" class="btn danger">Send FAKE alert (untrusted sender)</button>
+        <button id="send-again" type="button" class="btn" disabled>Send the same alert again (duplicate test)</button>
+      </div>
+    </section>
+
+    <section class="card" aria-labelledby="h-result" aria-live="polite">
+      <h2 id="h-result">2. What the service did</h2>
+      <div id="result" class="result empty">Send an alert to see each rule and what Gemini read.</div>
+      <h3>Recent sends</h3>
+      <ol id="history" class="history"><li class="muted">Nothing sent yet.</li></ol>
+    </section>
+  </main>
+
+  <script type="module" src="js/console.js"></script>
+</body>
+</html>

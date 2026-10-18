@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#ffffff">
+  <title>Jugnu Alert Screen</title>
+  <meta name="description" content="Jugnu Alert counter screen: shows the shop QR code and announces bank payment alerts with a chime, a spoken line and a large popup.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='14' fill='%23f2b705' fill-opacity='.25'/%3E%3Ccircle cx='16' cy='16' r='7' fill='%23f2b705'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="css/jugnu.css">
+  <link rel="stylesheet" href="css/screen.css">
+</head>
+<body>
+  <main id="app">
+    <header class="bar">
+      <span class="brand"><i class="spark"></i> Jugnu Alert</span>
+      <div id="link" class="link" data-state="offline" role="status" aria-live="polite">
+        <span class="dot" aria-hidden="true"></span><span id="link-label">Not connected</span>
+      </div>
+    </header>
+
+    <!-- Pair this screen with a shop -->
+    <section id="pair" class="center" hidden>
+      <h1>Pair this screen</h1>
+      <p class="muted">Enter the shop's pairing code to show its QR code and hear its payments.</p>
+      <form id="pair-form" autocomplete="off">
+        <label class="sr-only" for="code">Pairing code</label>
+        <input id="code" name="code" type="text" inputmode="text" autocapitalize="characters" spellcheck="false" placeholder="JUGNU-DEMO" maxlength="24" required>
+        <button type="submit" class="primary">Join shop</button>
+      </form>
+      <p id="pair-error" class="error" role="alert" hidden></p>
+      <p class="hint">Demo shop for judges: <button type="button" id="use-demo" class="linklike">JUGNU-DEMO</button> (synthetic data only)</p>
+      <p class="hint"><a href="console">Open the alert console</a> in another tab to send alerts to this screen.</p>
+    </section>
+
+    <!-- Idle: QR code, shop name, account number -->
+    <section id="idle" class="center idle" hidden>
+      <div id="qr" class="qr" role="img" aria-label="Shop QR code"></div>
+      <h1 id="shop-name" class="shop-name" dir="auto"></h1>
+      <p id="shop-account" class="account"></p>
+      <p id="last" class="last" hidden></p>
+    </section>
+
+    <!-- Payment popup, 5 seconds -->
+    <section id="popup" class="popup" data-kind="verified" role="alert" aria-live="assertive" hidden>
+      <div class="glow" aria-hidden="true"></div>
+      <p id="pop-kicker" class="kicker"></p>
+      <p id="pop-amount" class="amount"></p>
+      <p id="pop-from" class="from" dir="auto"></p>
+      <p id="pop-meta" class="meta"></p>
+      <p id="pop-warning" class="warning" hidden></p>
+      <span id="pop-queue" class="queue" hidden></span>
+      <div class="countdown" aria-hidden="true"><i></i></div>
+    </section>
+
+    <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+
+    <button id="sound-pill" class="pill" type="button" hidden>Tap to turn on sound</button>
+    <p id="rotate" class="rotate">Turn your phone sideways for the counter view.</p>
+
+    <button id="gear" class="gear" type="button" aria-label="Sound and screen settings" aria-expanded="false" aria-controls="settings">Settings</button>
+    <aside id="settings" class="settings" hidden>
+      <h2>Sound and screen</h2>
+      <label>Volume <input id="volume" type="range" min="0" max="100" value="80"></label>
+      <label>Spoken language
+        <select id="lang">
+          <option value="en">English</option>
+          <option value="ur">اردو (Urdu)</option>
+          <option value="hi">हिन्दी (Hindi)</option>
+        </select>
+      </label>
+      <p id="voice-note" class="muted small"></p>
+      <div class="row">
+        <button type="button" id="test-ok">Test confirmed</button>
+        <button type="button" id="test-warn">Test unverified</button>
+      </div>
+      <div class="row">
+        <button type="button" id="fullscreen">Full screen, keep awake</button>
+        <button type="button" id="unpair">Change shop</button>
+      </div>
+      <p id="feed-note" class="muted small"></p>
+    </aside>
+  </main>
+
+  <script src="vendor/qrcode.js"></script>
+  <script type="module" src="js/screen.js"></script>
+</body>
+</html>

@@ -1,0 +1,31 @@
+{
+  "name": "jugnu-alert-prototype",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Jugnu Alert: web prototype for the Google Cloud AI Builder Cup 2026 (Team Jugnu). A shop counter screen that chimes and speaks when a bank payment alert arrives, with Gemini reading the alert.",
+  "license": "Apache-2.0",
+  "main": "dist/index.js",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "start": "node dist/index.js",
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@google/genai": "^2.30.0",
+    "dotenv": "^18.0.8",
+    "express": "^5.3.0",
+    "firebase-admin": "^13.10.0"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.6",
+    "@types/node": "^20.19.43",
+    "tsx": "^4.23.15",
+    "typescript": "^5.9.3",
+    "vitest": "^3.2.7"
+  }
+}

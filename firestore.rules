@@ -1,0 +1,47 @@
+rules_version = '2';
+
+// Jugnu Alert relay.
+//
+//  - Events are WRITTEN only by the Cloud Run service (it uses the Admin SDK,
+//    which bypasses these rules). No client can create, change or delete data.
+//  - Events are READ only by a paired Screen: an anonymous Firebase user whose
+//    uid the server recorded in shops/{shopId}/screens/{uid} after the right
+//    pairing code was presented to POST /api/pair.
+//  - Pairing codes, duplicate fingerprints and screen registrations are not
+//    readable by any client.
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isPairedScreen(shopId) {
+      return request.auth != null
+        && exists(/databases/$(database)/documents/shops/$(shopId)/screens/$(request.auth.uid));
+    }
+
+    match /shops/{shopId} {
+      allow read: if isPairedScreen(shopId);
+      allow write: if false;
+
+      match /events/{eventId} {
+        allow read: if isPairedScreen(shopId);
+        allow write: if false;
+      }
+
+      match /screens/{uid} {
+        allow read, write: if false;
+      }
+
+      match /seen/{fingerprint} {
+        allow read, write: if false;
+      }
+    }
+
+    match /pairings/{code} {
+      allow read, write: if false;
+    }
+
+    // Everything else stays closed.
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

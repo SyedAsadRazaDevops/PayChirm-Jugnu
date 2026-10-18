@@ -1,0 +1,94 @@
+/* Jugnu Alert: shared design tokens. "Jugnu" means firefly: a small light that appears the moment something arrives. */
+:root {
+  --bg: #ffffff;
+  --surface: #f7f6f2;
+  --ink: #16181d;
+  --ink-soft: #5b6270;
+  --line: #e4e2da;
+  --glow: #f2b705;
+  --glow-soft: rgba(242, 183, 5, 0.22);
+  --ok: #0b7a43;
+  --ok-bg: #e6f5ec;
+  --warn: #9a5b00;
+  --warn-bg: #fff3dc;
+  --bad: #b3261e;
+  --bad-bg: #fdecea;
+  --live: #1aa860;
+  --amber: #f5a100;
+  --off: #d93025;
+  --font: system-ui, -apple-system, 'Segoe UI', Roboto, 'Noto Sans', 'Noto Naskh Arabic', 'Noto Sans Devanagari', Arial, sans-serif;
+  --mono: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+}
+:root[data-theme='dark'] {
+  --bg: #0f1115;
+  --surface: #181b21;
+  --ink: #eef0f4;
+  --ink-soft: #a3aab8;
+  --line: #2a2f39;
+  --glow-soft: rgba(242, 183, 5, 0.18);
+  --ok: #52d68b;
+  --ok-bg: #12301f;
+  --warn: #ffbe4d;
+  --warn-bg: #3a2a0c;
+  --bad: #ff8a80;
+  --bad-bg: #3b1714;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --bg: #0f1115;
+    --surface: #181b21;
+    --ink: #eef0f4;
+    --ink-soft: #a3aab8;
+    --line: #2a2f39;
+    --glow-soft: rgba(242, 183, 5, 0.18);
+    --ok: #52d68b;
+    --ok-bg: #12301f;
+    --warn: #ffbe4d;
+    --warn-bg: #3a2a0c;
+    --bad: #ff8a80;
+    --bad-bg: #3b1714;
+  }
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; }
+body {
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--ink);
+  -webkit-text-size-adjust: 100%;
+}
+button { font: inherit; cursor: pointer; }
+:focus-visible { outline: 3px solid var(--glow); outline-offset: 2px; }
+[hidden] { display: none !important; }
+
+/* Link status: dot AND words, so colour is never the only signal. */
+.link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--ink-soft);
+}
+.dot { width: 0.8em; height: 0.8em; border-radius: 50%; background: var(--off); flex: none; }
+.link[data-state='live'] .dot { background: var(--live); box-shadow: 0 0 0 0 rgba(26, 168, 96, 0.5); animation: pulse 2.4s ease-out infinite; }
+.link[data-state='reconnecting'] .dot { background: var(--amber); }
+.link[data-state='offline'] .dot { background: var(--off); }
+@keyframes pulse { 70% { box-shadow: 0 0 0 0.6em rgba(26, 168, 96, 0); } 100% { box-shadow: 0 0 0 0 rgba(26, 168, 96, 0); } }
+@media (prefers-reduced-motion: reduce) { .link[data-state='live'] .dot { animation: none; } }
+
+.chip {
+  display: inline-block;
+  padding: 0.15em 0.6em;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.chip.verified { background: var(--ok-bg); color: var(--ok); }
+.chip.unverified { background: var(--warn-bg); color: var(--warn); }
+.chip.rejected { background: var(--bad-bg); color: var(--bad); }
+.chip.mock { background: var(--warn-bg); color: var(--warn); }
+.chip.info { background: var(--surface); color: var(--ink-soft); border: 1px solid var(--line); }

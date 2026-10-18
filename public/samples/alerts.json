@@ -1,0 +1,136 @@
+{
+  "synthetic": true,
+  "notice": "SYNTHETIC SAMPLES. Every alert here was written for this demo. The banks (SampleBank, DemoBank, TestPay), names, account endings and amounts are invented. No real bank data is used. Placeholders such as {{amount}} and {{ref}} are filled in by the alert console each time, so every send is a fresh alert.",
+  "samples": [
+    {
+      "id": "en-sms-samplebank",
+      "group": "English",
+      "title": "English SMS, credit from SampleBank",
+      "sender": "SAMPLEBANK",
+      "name": "Ali Raza",
+      "amount": 2500,
+      "template": "SampleBank: Rs. {{amount}} credited to A/c XXXX1234 on {{date}} {{time}} from {{name}}. Ref: {{ref}}. Avl Bal: Rs. 48,250.75. Never share your OTP with anyone.",
+      "expect": { "status": "verified", "reasonCode": "ok" }
+    },
+    {
+      "id": "en-email-demobank",
+      "group": "English",
+      "title": "English email layout, credit from DemoBank (INR)",
+      "sender": "DEMOBANK",
+      "name": "Priya Verma",
+      "amount": 1850,
+      "template": "Dear Customer,\nYour account ending 5678 has been credited with INR {{amount}} on {{date}} at {{time}}.\nSender: {{name}}\nUTR: {{ref}}\nAvailable balance: INR 1,02,340.50\nYour login OTP is 483920. Do not share it with anyone.",
+      "expect": { "status": "verified", "reasonCode": "ok" }
+    },
+    {
+      "id": "en-wallet-testpay",
+      "group": "English",
+      "title": "English wallet notification, TestPay",
+      "sender": "TESTPAY",
+      "name": "Sana Malik",
+      "amount": 750,
+      "template": "TestPay: You received PKR {{amount}} from {{name}}. Txn ID {{ref}}. {{date}} {{time}}",
+      "expect": { "status": "verified", "reasonCode": "ok" }
+    },
+    {
+      "id": "ur-native-demobank",
+      "group": "Urdu",
+      "title": "Urdu (اردو), native script, DemoBank",
+      "sender": "DEMOBANK",
+      "name": "علی رضا",
+      "amount": 3200,
+      "template": "ڈیمو بینک: {{name}} کی طرف سے آپ کے اکاؤنٹ میں {{amount:ur}} روپے جمع ہو گئے ہیں۔ ٹرانزیکشن آئی ڈی: {{ref}}۔ تاریخ: {{date}} {{time}}۔ موجودہ بیلنس: ۴۵,۰۰۰ روپے۔",
+      "expect": { "status": "verified", "reasonCode": "ok" }
+    },
+    {
+      "id": "ur-roman-samplebank",
+      "group": "Urdu",
+      "title": "Urdu in Roman script, SampleBank",
+      "sender": "SAMPLEBANK",
+      "name": "Bilal Ahmed",
+      "amount": 1200,
+      "template": "SampleBank: Aap ke account mein Rs {{amount}} jama ho gaye hain. Bhejne wala: {{name}}. Ref {{ref}}. Waqt: {{date}} {{time}}. Balance: Rs 12,300.",
+      "expect": { "status": "verified", "reasonCode": "ok" }
+    },
+    {
+      "id": "hi-native-samplebank",
+      "group": "Hindi",
+      "title": "Hindi (हिन्दी), native script, SampleBank",
+      "sender": "SAMPLEBANK",
+      "name": "राहुल शर्मा",
+      "amount": 4500,
+      "template": "सैंपल बैंक: आपके खाते में {{amount:hi}} रुपये जमा हुए। भेजने वाले: {{name}}। संदर्भ संख्या: {{ref}}। दिनांक: {{date}} {{time}}। शेष राशि: ₹ 25,400। OTP किसी से साझा न करें।",
+      "expect": { "status": "verified", "reasonCode": "ok" }
+    },
+    {
+      "id": "hi-roman-samplebank",
+      "group": "Hindi",
+      "title": "Hindi in Roman script, SampleBank",
+      "sender": "SAMPLEBANK",
+      "name": "Priya Verma",
+      "amount": 999,
+      "template": "SampleBank: Aapke khate mein Rs {{amount}} jama hue. Bhejne wale: {{name}}. Ref no {{ref}}. {{date}} {{time}}. Bal Rs 9,870.",
+      "expect": { "status": "verified", "reasonCode": "ok" }
+    },
+    {
+      "id": "en-pending-lowconf",
+      "group": "Should not be confirmed",
+      "title": "Pending credit, ambiguous wording (low confidence, Unverified)",
+      "sender": "SAMPLEBANK",
+      "name": "",
+      "amount": 2500,
+      "template": "SampleBank: Rs. {{amount}} is pending and may be credited to your account after clearing. Ref {{ref}}.",
+      "expect": { "status": "unverified", "reasonCode": "low_confidence" }
+    },
+    {
+      "id": "en-stale-replay",
+      "group": "Should not be confirmed",
+      "title": "Old genuine-looking alert replayed (Unverified, stale)",
+      "sender": "SAMPLEBANK",
+      "name": "Ali Raza",
+      "amount": 2500,
+      "template": "SampleBank: Rs. {{amount}} credited to A/c XXXX1234 on 02-Jan-2026 10:15 from {{name}}. Ref: {{ref}}.",
+      "expect": { "status": "unverified", "reasonCode": "stale_alert" }
+    },
+    {
+      "id": "en-promo-scam",
+      "group": "Should be rejected",
+      "title": "Promotion with a link from a trusted sender (rejected)",
+      "sender": "SAMPLEBANK",
+      "name": "",
+      "amount": 5000,
+      "template": "SampleBank: Win cashback up to Rs. 5,000 this week! Click http://example.invalid/offer to claim your prize.",
+      "expect": { "status": "rejected", "reasonCode": "scam_suspected" }
+    },
+    {
+      "id": "en-debit",
+      "group": "Should be rejected",
+      "title": "Debit alert, money left the account (rejected)",
+      "sender": "DEMOBANK",
+      "name": "",
+      "amount": 800,
+      "template": "DemoBank: Rs. {{amount}} debited from A/c XXXX5678 on {{date}} {{time}} at TESTMART. Ref {{ref}}.",
+      "expect": { "status": "rejected", "reasonCode": "not_a_credit" }
+    },
+    {
+      "id": "otp-only",
+      "group": "Should be rejected",
+      "title": "One-time password only (nothing left to read)",
+      "sender": "SAMPLEBANK",
+      "name": "",
+      "amount": 1,
+      "template": "SampleBank: Your OTP is 482913. Do not share it with anyone.",
+      "expect": { "status": "rejected", "reasonCode": "nothing_to_read" }
+    },
+    {
+      "id": "fake-untrusted",
+      "group": "Should be rejected",
+      "title": "FAKE credit alert from an untrusted sender (rejected)",
+      "sender": "FAKE-BANK",
+      "name": "Fake Sender",
+      "amount": 9999,
+      "template": "SampleBank: Rs. {{amount}} credited to A/c XXXX1234 on {{date}} {{time}} from {{name}}. Ref: {{ref}}.",
+      "expect": { "status": "rejected", "reasonCode": "untrusted_sender" }
+    }
+  ]
+}

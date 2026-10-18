@@ -1,0 +1,13 @@
+# Files that `gcloud run deploy --source .` must not upload.
+.git
+.gitignore
+node_modules
+dist
+test
+.env
+.env.*
+!.env.example
+*.log
+coverage
+.firebase
+firebase-debug.log*
