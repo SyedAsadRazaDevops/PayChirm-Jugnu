@@ -254,6 +254,21 @@ test/           unit and HTTP tests (vitest)
 Dockerfile  firebase.json  firestore.rules  .env.example
 ```
 
+## Make shortcuts
+
+`make help` lists every target. On Windows use Git Bash.
+
+| Task | Command |
+|---|---|
+| Install, type-check and test | `make install check` |
+| Run locally (mock Gemini) | `make dev` |
+| Scan, commit and push the current branch | `make ship m="message"` (`make push BRANCH=main` for `main`) |
+| First-time Google Cloud and Firebase setup | `make gcp-setup firebase-setup PROJECT_ID=your-project-id` |
+| Deploy Cloud Run and Firebase Hosting | `make deploy PROJECT_ID=your-project-id` |
+| Check the live site | `make check-live PROJECT_ID=your-project-id` |
+
+`make push` signs in as the repository owner for that one command, then switches the GitHub CLI back to the account that was active before. Set `GH_USER` if you fork the repo.
+
 ## Documentation
 
 The design behind this prototype (problem, solution, always-online design, trust and privacy, Android publishing, roadmap) is in [`docs/`](docs/README.md): the [design proposal](docs/design-proposal.md), the [architecture](docs/architecture.md) and the [pitch deck content](docs/pitch-deck.md).
